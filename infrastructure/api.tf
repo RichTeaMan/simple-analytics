@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "lambda_logging" {
   statement {
     effect = "Allow"
 
-    actions = ["s3:*Object"]
+    actions = ["s3:PutObject"]
     
     resources = ["arn:aws:s3:::${aws_s3_bucket.event_bucket.bucket}/*"]
   }
