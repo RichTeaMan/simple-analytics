@@ -25,7 +25,8 @@ router.get('/', async (req: Request, res: Response) => {
       Body: JSON.stringify({
         ip,
         datetime: new Date(),
-        referrer: req.headers.referer
+        referrer: req.headers.referer,
+        useragent: req.headers.useragent
       })
     }));
 
