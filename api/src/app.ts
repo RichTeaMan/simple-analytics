@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/', routes);
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(404).send();
+  res.status(404).send(["service 404", req.url]);
 });
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
