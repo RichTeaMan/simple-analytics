@@ -26,7 +26,7 @@ router.get('/:key', async (req: Request, res: Response) => {
         ip,
         datetime: new Date(),
         referrer: req.headers.referer,
-        useragent: req.headers.useragent,
+        useragent: req.headers['user-agent'],
         key: req.params.key
       })
     }));
