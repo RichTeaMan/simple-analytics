@@ -7,7 +7,7 @@ const router = Router();
 const IP_HEADERS = ['x-forwarded-for'];
 const BUCKET_NAME = "richteaman-simple-analytics-events";
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/:key', async (req: Request, res: Response) => {
   try {
 
     let ip = "unknown";
@@ -26,7 +26,8 @@ router.get('/', async (req: Request, res: Response) => {
         ip,
         datetime: new Date(),
         referrer: req.headers.referer,
-        useragent: req.headers.useragent
+        useragent: req.headers.useragent,
+        key: req.params.key
       })
     }));
 
