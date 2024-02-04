@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "analytics-terraform-state"
-    key    = "analytics/terraform.tfstate"
+    bucket = "richteaman-analytics-terraform-state"
+    key    = "terraform.tfstate"
     region = "eu-west-2"
   }
 }
