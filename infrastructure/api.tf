@@ -125,7 +125,7 @@ resource "aws_apigatewayv2_route" "books_analytics_api_lambda" {
 
 resource "aws_apigatewayv2_route" "events_analytics_api_lambda" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
-  route_key = "ANY /v1/events"
+  route_key = "ANY /v1/events/{key+}"
 
   target = "integrations/${aws_apigatewayv2_integration.analytics_api_lambda.id}"
 }
