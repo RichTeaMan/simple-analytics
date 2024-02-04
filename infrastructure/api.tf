@@ -93,6 +93,11 @@ resource "aws_apigatewayv2_integration" "analytics_api_lambda" {
   integration_uri      = aws_lambda_function.analytics_api_lambda.arn
   #passthrough_behavior = "WHEN_NO_MATCH"
   payload_format_version = "2.0"
+
+    request_parameters = {
+      // removes stage name
+    "overwrite:path"                   = "$${request.path}"
+  }
 }
 
 resource "aws_lambda_permission" "analytics_api_lambda" {
