@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_stage" "api_gateway_prod_stage" {
   auto_deploy = true
 }
 
-resource "aws_lambda_function" "anayltics_api_lambda" {
+resource "aws_lambda_function" "analytics_api_lambda" {
   filename      = local.lambda_file_zip
   function_name = "analytics_api_lambda"
   role          = aws_iam_role.iam_for_lambda.arn
@@ -83,28 +83,29 @@ resource "aws_lambda_function" "anayltics_api_lambda" {
   ]
 }
 
-resource "aws_apigatewayv2_integration" "anayltics_api_lambda" {
+resource "aws_apigatewayv2_integration" "analytics_api_lambda" {
   api_id           = aws_apigatewayv2_api.api_gateway.id
   integration_type = "AWS_PROXY"
 
   connection_type      = "INTERNET"
   description          = "API"
-  integration_method   = "POST"
-  integration_uri      = aws_lambda_function.anayltics_api_lambda.arn
-  passthrough_behavior = "WHEN_NO_MATCH"
+  #integration_method   = "POST"
+  integration_uri      = aws_lambda_function.analytics_api_lambda.arn
+  #passthrough_behavior = "WHEN_NO_MATCH"
+  payload_format_version = "2.0"
 }
 
-resource "aws_lambda_permission" "anayltics_api_lambda" {
+resource "aws_lambda_permission" "analytics_api_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.anayltics_api_lambda.function_name
+  function_name = aws_lambda_function.analytics_api_lambda.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
 }
 
-resource "aws_apigatewayv2_route" "anayltics_api_lambda" {
+resource "aws_apigatewayv2_route" "analytics_api_lambda" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "ANY /v1/books"
 
-  target = "integrations/${aws_apigatewayv2_integration.anayltics_api_lambda.id}"
+  target = "integrations/${aws_apigatewayv2_integration.analytics_api_lambda.id}"
 }
