@@ -111,9 +111,16 @@ resource "aws_lambda_permission" "analytics_api_lambda" {
   source_arn    = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
 }
 
-resource "aws_apigatewayv2_route" "analytics_api_lambda" {
+resource "aws_apigatewayv2_route" "books_analytics_api_lambda" {
   api_id    = aws_apigatewayv2_api.api_gateway.id
   route_key = "ANY /v1/books"
+
+  target = "integrations/${aws_apigatewayv2_integration.analytics_api_lambda.id}"
+}
+
+resource "aws_apigatewayv2_route" "events_analytics_api_lambda" {
+  api_id    = aws_apigatewayv2_api.api_gateway.id
+  route_key = "ANY /v1/events"
 
   target = "integrations/${aws_apigatewayv2_integration.analytics_api_lambda.id}"
 }
