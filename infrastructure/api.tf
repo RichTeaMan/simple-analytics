@@ -41,6 +41,13 @@ data "aws_iam_policy_document" "lambda_logging" {
 
     resources = ["arn:aws:logs:*:*:*"]
   }
+  statement {
+    effect = "Allow"
+
+    actions = ["s3:*Object"]
+    
+    resources = ["arn:aws:s3:::${aws_s3_bucket.event_bucket.bucket}/*"]
+  }
 }
 
 resource "aws_iam_policy" "lambda_logging" {
