@@ -66,17 +66,16 @@ resource "aws_apigatewayv2_stage" "api_gateway_prod_stage" {
   auto_deploy = true
 }
 
-# hello world
-
 resource "aws_lambda_function" "anayltics_api_lambda" {
   filename      = local.lambda_file_zip
-  function_name = "anayltics_api_lambda"
+  function_name = "analytics_api_lambda"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "dist/app.handler"
 
   source_code_hash = filebase64sha256(local.lambda_file_zip)
 
-  runtime = "nodejs20.x"
+  runtime       = "nodejs20.x"
+  architectures = ["arm64"]
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
