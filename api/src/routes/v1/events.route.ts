@@ -11,9 +11,12 @@ router.get('/', async (req: Request, res: Response) => {
   try {
 
     let ip = "unknown";
-    const headerArray = Object.keys(req.headers);
+    const headerArray = Object.entries(req.headers);
     for (const ipHeader in IP_HEADERS) {
-      ip = headerArray[ipHeader];
+      const value = headerArray[ipHeader];
+      if (value) {
+        ip = `${value}`;
+      }
     }
 
     const client = new S3Client({ region: "eu-west-2" });
@@ -29,15 +32,6 @@ router.get('/', async (req: Request, res: Response) => {
     res.status(200).json(req.headers);
   } catch (error) {
     console.error('An error ocurred:', error);
-    res.status(500).json(error);
-  }
-});
-
-router.post('/', async (req: Request, res: Response) => {
-  try {
-    res.status(201).json({});
-  } catch (error) {
-    console.error('An error occurred:', error);
     res.status(500).json(error);
   }
 });
