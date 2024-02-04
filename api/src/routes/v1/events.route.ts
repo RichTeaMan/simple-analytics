@@ -11,9 +11,8 @@ router.get('/', async (req: Request, res: Response) => {
   try {
 
     let ip = "unknown";
-    const headerArray = Object.entries(req.headers);
-    for (const ipHeader in IP_HEADERS) {
-      const value = headerArray[ipHeader];
+    for (const ipHeader of IP_HEADERS) {
+      const value = req.headers[ipHeader];
       if (value) {
         ip = `${value}`;
       }
@@ -29,7 +28,7 @@ router.get('/', async (req: Request, res: Response) => {
       })
     }));
 
-    res.status(200).json(headerArray);
+    res.status(201);
   } catch (error) {
     console.error('An error ocurred:', error);
     res.status(500).json(error);
