@@ -4,8 +4,8 @@ on: push
 
 jobs:
   
-  export-linux:
-    name: Linux Export
+  build-deploy:
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
