@@ -58,6 +58,9 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 resource "aws_apigatewayv2_api" "api_gateway" {
   name          = "analytics-api"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_origins = ["*"]
+  }
 }
 
 resource "aws_apigatewayv2_stage" "api_gateway_prod_stage" {
