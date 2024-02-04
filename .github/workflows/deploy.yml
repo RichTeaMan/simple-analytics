@@ -40,8 +40,14 @@ jobs:
           cd api
           npm install
           npm run build
+          rm node_modules -r
+          npm install --production
+          mkdir build
+          mv dist/* build/.
+          mv node_modules build/.
+          cd build
           zip -r analytics-api.zip .
-          cp analytics-api.zip ../infrastructure/.
+          cp analytics-api.zip ../../infrastructure/.
       - name: Create infrastructure
         run: |
           cd infrastructure

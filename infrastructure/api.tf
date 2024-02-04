@@ -73,7 +73,7 @@ resource "aws_lambda_function" "analytics_api_lambda" {
   filename      = local.lambda_file_zip
   function_name = "analytics_api_lambda"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "dist/app.handler"
+  handler       = "app.handler"
 
   source_code_hash = filebase64sha256(local.lambda_file_zip)
 
@@ -92,9 +92,7 @@ resource "aws_apigatewayv2_integration" "analytics_api_lambda" {
 
   connection_type      = "INTERNET"
   description          = "API"
-  #integration_method   = "POST"
   integration_uri      = aws_lambda_function.analytics_api_lambda.arn
-  #passthrough_behavior = "WHEN_NO_MATCH"
   payload_format_version = "2.0"
 
     request_parameters = {
