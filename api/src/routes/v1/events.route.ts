@@ -24,7 +24,8 @@ router.get('/', async (req: Request, res: Response) => {
       Key: uuidv4(),
       Body: JSON.stringify({
         ip,
-        datetime: new Date()
+        datetime: new Date(),
+        referrer: req.headers.referer
       })
     }));
 
